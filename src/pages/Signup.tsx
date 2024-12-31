@@ -1,0 +1,48 @@
+import { Inputh } from "../components/CreateContentModal";
+import { Button } from "../components/Button"; 
+import { useRef } from "react";
+ import {BACKEND_URL} from '../config';
+ import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+export function Signup (){
+  const usernameRef = useRef<HTMLInputElement>();
+  const passwordRef=useRef<HTMLInputElement>();
+  const navigate = useNavigate();
+
+  async   function signup (){
+        const username =  usernameRef.current?.value;
+        const password = passwordRef.current?.value;  
+      await axios.post(BACKEND_URL+"api/v1/signup",{
+       
+            username, 
+            password,
+        
+      });
+
+      alert("you have signed up ");
+      navigate("/signin"); 
+
+
+    }
+
+
+
+
+    return (
+        <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
+            <div className="bg-white rounded-xl border  min-w-48 p-8">
+                {/* Input for username */}
+               <div> <Inputh uref={usernameRef} Placeholder="Username" /> </div>
+               
+                
+                {/* Input for password */}
+                <Inputh  uref={passwordRef}Placeholder="Password" />
+
+                {/* Submit button */}
+                <div className=" pt-4 mx-auto">
+                    <Button  disabled = {false} onClick={signup} variant="primary" text=" Signup"   size="md" fullWidth={true} />
+                </div>
+            </div>
+        </div>
+    );
+}
